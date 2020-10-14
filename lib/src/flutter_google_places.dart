@@ -65,6 +65,7 @@ class PlacesAutocompleteWidget extends StatefulWidget {
   }
 
   static PlacesAutocompleteState of(BuildContext context) =>
+      // ignore: deprecated_member_use
       context.ancestorStateOfType(const TypeMatcher<PlacesAutocompleteState>());
 }
 
@@ -143,9 +144,9 @@ class _PlacesAutocompleteOverlayState extends PlacesAutocompleteState {
             children: _response.predictions
                 .map(
                   (p) => PredictionTile(
-                        prediction: p,
-                        onTap: Navigator.of(context).pop,
-                      ),
+                    prediction: p,
+                    onTap: Navigator.of(context).pop,
+                  ),
                 )
                 .toList(),
           ),

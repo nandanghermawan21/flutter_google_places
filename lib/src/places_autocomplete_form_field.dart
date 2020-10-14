@@ -72,7 +72,7 @@ class PlacesAutocompleteFormField extends FormField<String> {
               controller != null ? controller.text : (initialValue ?? ''),
           onSaved: onSaved,
           validator: validator,
-          autovalidate: autovalidate,
+          autovalidateMode: AutovalidateMode.always,
           builder: (FormFieldState<String> field) {
             final _TextFormFieldState state = field;
             final InputDecoration effectiveDecoration = inputDecoration
