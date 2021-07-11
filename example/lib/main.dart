@@ -1,6 +1,8 @@
 import 'dart:async';
 
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:google_maps_webservice/places.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
@@ -64,10 +66,12 @@ class _MyAppState extends State<MyApp> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           _buildDropdownMenu(),
+          // ignore: deprecated_member_use
           RaisedButton(
             onPressed: _handlePressButton,
             child: Text("Search places"),
           ),
+          // ignore: deprecated_member_use
           RaisedButton(
             child: Text("Custom"),
             onPressed: () {
@@ -93,13 +97,14 @@ class _MyAppState extends State<MyApp> {
         ],
         onChanged: (m) {
           setState(() {
-            _mode = m;
+            _mode = m as Mode;
           });
         },
       );
 
   void onError(PlacesAutocompleteResponse response) {
-    homeScaffoldKey.currentState.showSnackBar(
+    // ignore: deprecated_member_use
+    homeScaffoldKey.currentState!.showSnackBar(
       SnackBar(content: Text(response.errorMessage)),
     );
   }
@@ -116,17 +121,19 @@ class _MyAppState extends State<MyApp> {
       components: [Component(Component.country, "fr")],
     );
 
-    displayPrediction(p, homeScaffoldKey.currentState);
+    displayPrediction(p, homeScaffoldKey.currentState ?? new ScaffoldState());
   }
 }
 
 Future<Null> displayPrediction(Prediction p, ScaffoldState scaffold) async {
+  // ignore: unnecessary_null_comparison
   if (p != null) {
     // get detail (lat/lng)
     PlacesDetailsResponse detail = await _places.getDetailsByPlaceId(p.placeId);
     final lat = detail.result.geometry.location.lat;
     final lng = detail.result.geometry.location.lng;
 
+    // ignore: deprecated_member_use
     scaffold.showSnackBar(
       SnackBar(content: Text("${p.description} - $lat/$lng")),
     );
@@ -155,7 +162,8 @@ class _CustomSearchScaffoldState extends PlacesAutocompleteState {
     final appBar = AppBar(title: AppBarPlacesAutoCompleteTextField());
     final body = PlacesAutocompleteResult(
       onTap: (p) {
-        displayPrediction(p, searchScaffoldKey.currentState);
+        displayPrediction(
+            p, searchScaffoldKey.currentState ?? new ScaffoldState());
       },
       logo: Row(
         children: [FlutterLogo()],
@@ -168,7 +176,8 @@ class _CustomSearchScaffoldState extends PlacesAutocompleteState {
   @override
   void onResponseError(PlacesAutocompleteResponse response) {
     super.onResponseError(response);
-    searchScaffoldKey.currentState.showSnackBar(
+    // ignore: deprecated_member_use
+    searchScaffoldKey.currentState!.showSnackBar(
       SnackBar(content: Text(response.errorMessage)),
     );
   }
@@ -176,8 +185,10 @@ class _CustomSearchScaffoldState extends PlacesAutocompleteState {
   @override
   void onResponse(PlacesAutocompleteResponse response) {
     super.onResponse(response);
+    // ignore: unnecessary_null_comparison
     if (response != null && response.predictions.isNotEmpty) {
-      searchScaffoldKey.currentState.showSnackBar(
+      // ignore: deprecated_member_use
+      searchScaffoldKey.currentState!.showSnackBar(
         SnackBar(content: Text("Got answer")),
       );
     }
